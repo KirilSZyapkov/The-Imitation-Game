@@ -1,0 +1,36 @@
+function theImitationGame(input) {
+    let message = input.shift();
+    let line;
+
+    let action = {
+
+        ChangeAll(message, a, b) {
+
+            while (message.includes(a)) {
+                message = message.replace(a, b);
+            }
+            return message;
+        },
+        Insert(message, a, b) {
+            message = message.split(``);
+            message.splice(a, 0, b);
+            message = message.join(``);
+            return message;
+        },
+        Move(message, x) {
+            message = message.split(``);
+            for (let a = 0; a < x; a++) {
+                let letter = message.shift();
+                message.push(letter);
+            }
+            message = message.join(``);
+            return message;
+        }
+    }
+
+    while ((line = input.shift()) !== "Decode") {
+        let [command, ...inf] = line.split(`|`);
+        message = action[command](message, ...inf);
+    }
+    console.log(`The decrypted message is: ${message}`);
+}
